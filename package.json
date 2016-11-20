@@ -1,0 +1,12 @@
+{
+  "name": "value-objects-in-js",
+  "version": "0.0.1",
+  "description": "Example of creating this-less Value Objects",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "mocha --watch"
+  },
+  "keywords": [],
+  "author": "Pete Hodgson",
+  "license": "Creative Commons"
+}
