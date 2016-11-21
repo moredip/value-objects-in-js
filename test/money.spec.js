@@ -1,4 +1,5 @@
-const ThisLessMoney = require('../lib/money');
+const ThisLessMoney = require('../lib/closure-based-money');
+const ThisLessMoneyWithSymbol = require('../lib/money');
 const ClassBasedMoney = require('../lib/this-based-money');
 
 describe('a class-based money value object', function () {
@@ -8,7 +9,21 @@ describe('a class-based money value object', function () {
   describeMoney(createMoney);
 });
 
-describe('a this-less money value object', function () {
+describe('a this-less money value object using Friend State Accessor', function () {
+  describeMoney(ThisLessMoneyWithSymbol);
+  describe('limitations', function () {
+    it('does not *perfectly* encapsulate the state accessor', function () {
+      const someMoney = ThisLessMoneyWithSymbol(5,'USD');
+      const privateProperties = Object.getOwnPropertySymbols(someMoney);
+      expect(privateProperties).not.to.be.empty;
+      const stateAccessor = privateProperties[0];
+      const privateState = someMoney[stateAccessor]();
+      expect(privateState).to.deep.equal({_amount:5,_currency:'USD'});
+    });
+  });
+});
+
+describe('a this-less money value object exposing state via regular method', function () {
   describeMoney(ThisLessMoney);
 });
 
